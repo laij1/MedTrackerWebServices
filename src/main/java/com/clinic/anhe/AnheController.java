@@ -63,5 +63,10 @@ public class AnheController {
 		return "saved";
 	}
 	
+	@GetMapping(path="/patient")
+	public @ResponseBody Iterable<Patient> getPatientByDayAndShift(@RequestParam String day, @RequestParam String shift) {
+
+		return patientRepository.findByDayAndShift(day, shift);
+	}
 	
 }
