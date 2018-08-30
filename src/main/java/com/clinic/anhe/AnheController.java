@@ -1,5 +1,7 @@
 package com.clinic.anhe;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +67,26 @@ public class AnheController {
 		
 		return "saved";
 	}
+	
+	@GetMapping(path="/record/unpaid")
+	public @ResponseBody Iterable<MedicineRecord> getUnpaidMedicineRecord() {
+		return medicineRecordRepository.findByChargeAtIsNull();
+	}
+	
+	@GetMapping(path="/record/pid/unpaid")
+	public @ResponseBody Iterable<MedicineRecord> getUnpaidMedicineRecordByPid(@RequestParam Integer pid) {
+		return medicineRecordRepository.findByPidAndChargeAtIsNull(pid);
+	}
+	
+	@GetMapping(path="/record/update")
+	public @ResponseBody String updateMedicineRecordByRid(@RequestParam Integer rid, @RequestParam Integer chargeBy) {
+		 MedicineRecord medicineRecord = medicineRecordRepository.findByRid(rid);
+		 medicineRecord.setChargeBy(chargeBy);
+		 medicineRecord.setChargeAt(java.sql.Date.valueOf(LocalDate.now()));
+		 medicineRecordRepository.save(medicineRecord);
+		 return "saved";
+	}
+	
 	
 	@GetMapping(path="/patient")
 	public @ResponseBody Iterable<Patient> getPatientByDayAndShift(@RequestParam String day, @RequestParam String shift) {
