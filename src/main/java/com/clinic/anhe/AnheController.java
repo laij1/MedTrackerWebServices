@@ -36,10 +36,13 @@ public class AnheController {
 		return "Saved";
 	}
 	
+	@GetMapping(path="/medicine")
+	public @ResponseBody Iterable<Medicine> getMedincineByCategory(@RequestParam String category) {
+		return medicineRepository.findByCategory(category);
+	}
+	
 	@GetMapping(path="/medicine/all")
 	public @ResponseBody Iterable<Medicine> getAllMedincine() {
-		// This returns a JSON or XML with the users
-		//return medicineRepository.findByCategory(category);
 		return medicineRepository.findAll();
 	}
 	
