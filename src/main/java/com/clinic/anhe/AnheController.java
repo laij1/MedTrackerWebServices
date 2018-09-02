@@ -1,6 +1,7 @@
 package com.clinic.anhe;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class AnheController {
 	
 	@Autowired
 	private MedicineRecordRepository medicineRecordRepository;
+	
+	@Autowired
+	private ShiftRecordRepository shiftRecordRepository;
 
 	
 	@PostMapping(path="/medicine/add")
@@ -47,6 +51,13 @@ public class AnheController {
 	public @ResponseBody Iterable<Medicine> getAllMedincine() {
 		return medicineRepository.findAll();
 	}
+	
+	@PostMapping(path="record/addlist")
+	public @ResponseBody String addMedicineRecordList(@RequestBody List<MedicineRecord> recordList) {
+		medicineRecordRepository.saveAll(recordList);
+		return "saved";
+	}
+	
 	
 	@GetMapping(path="/record/add")
 	public @ResponseBody String addMedicineRecord(
@@ -90,8 +101,25 @@ public class AnheController {
 	
 	@GetMapping(path="/patient")
 	public @ResponseBody Iterable<Patient> getPatientByDayAndShift(@RequestParam String day, @RequestParam String shift) {
-
+		
 		return patientRepository.findByDayAndShift(day, shift);
+	}
+	
+	@GetMapping(path="/patient/day")
+	public @ResponseBody Iterable<Patient> getPatientByDayAndShift(@RequestParam String day) {
+		
+		return patientRepository.findByDay(day);
+	}
+	
+	@GetMapping(path="/employee/all")
+	public @ResponseBody Iterable<Employee> getAllEmployee() {
+		return employeeRepository.findAll();
+	}
+	
+	@PostMapping(path="/shift/record/addlist")
+	public @ResponseBody String addShiftRecordList(@RequestBody List<ShiftRecord> recordList) {
+		shiftRecordRepository.saveAll(recordList);
+		return "saved";
 	}
 	
 }

@@ -6,4 +6,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
 	
 	public Iterable<Patient> findByDayAndShift(String day, String shift);
+	
+	public Iterable<Patient> findByDay(String day);
 }
