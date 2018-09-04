@@ -1,7 +1,12 @@
 package com.clinic.anhe;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,10 +121,29 @@ public class AnheController {
 		return employeeRepository.findAll();
 	}
 	
-	@PostMapping(path="/shift/record/addlist")
+//	@GetMapping(path="/employee/eid")
+//	public @ResponseBody Iterable<Employee> getEmployeeByEid(@RequestParam Integer eid) {
+//		return employeeRepository.findByEid(eid);
+//	}
+	
+	
+	@PostMapping(path="/shiftrecord/addlist")
 	public @ResponseBody String addShiftRecordList(@RequestBody List<ShiftRecord> recordList) {
 		shiftRecordRepository.saveAll(recordList);
 		return "saved";
 	}
 	
+	@GetMapping(path="/shiftrecord")
+	public @ResponseBody Iterable<ShiftRecord> getAllShiftRecord(@RequestParam String createAt) throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		Date date = format.parse(createAt);
+		return shiftRecordRepository.findByCreateAt(date);
+	}
+	
+	@GetMapping(path="/shiftrecord/patient")
+	public @ResponseBody Iterable<ShiftRecord> getShiftRecordByPatient(@RequestParam String patient, @RequestParam String createAt) throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		Date date = format.parse(createAt);
+		return shiftRecordRepository.findByPatientAndCreateAt(patient, date);
+	}
 }

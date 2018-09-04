@@ -13,11 +13,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-//create_on Date not null,
-//nurse varchar(255) not null,
-//patient varchar(255) not null,
-//shift varchar(100),
-//day varchar(100) 
+
 @Entity
 @Table(name="shift_record")
 public class ShiftRecord {
@@ -34,6 +30,10 @@ public class ShiftRecord {
 	
 	private String nurse;
 	
+	private Integer eid;
+	
+	
+
 	private String patient;
 	
 	public Integer getSid() {
@@ -86,6 +86,14 @@ public class ShiftRecord {
 
 	public void setDay(String day) {
 		this.day = day;
+	}
+	
+	public Integer getEid() {
+		return eid;
+	}
+
+	public void setEid(Integer eid) {
+		this.eid = eid;
 	}
 	
 }
