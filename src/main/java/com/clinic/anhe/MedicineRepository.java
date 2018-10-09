@@ -8,4 +8,6 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
 	public Iterable<Medicine> findByCategory(String category);
 	
+	public Medicine findByMid(Integer mid);
+	
 }

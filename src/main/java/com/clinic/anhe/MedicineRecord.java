@@ -18,6 +18,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * @author laij1
+ *
+ */
 @Entity
 @Table(name="medicine_record")
 @EntityListeners(AuditingEntityListener.class)
@@ -54,10 +58,21 @@ public class MedicineRecord {
 	
 	private Integer subtotal;
 	
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+
 	@Column(nullable=false)
 	private String payment;
 	
 	private Integer pid;
+	
+	@Column(name="patient_name")
+	private String patientName;
 
 	public Integer getRid() {
 		return rid;
